@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>登録ページ</title>
+	<style>
+		dt{color: white; background: black;}
+        dd{margin: 2px;}
+	</style>
+	<script type="text/javascript">
+
+        // ロード時
+        window.addEventListener('load',
+            //ページロード時の処理
+            function(event){
+                var elem = document.getElementById('submit');
+                elem.addEventListener('click', clickSubmit, false);
+            }
+            , false);
+
+        // 送信ボタン押下時
+        function clickSubmit(event) {
+
+        }
+	</script>
+</head>
+<body>
+	<h1>利用者登録</h1>
+    <form>
+        <dt>ユーザーID</dt>
+        <dd><input type="text" id="user_id" value=""></dd>
+        <dt>名前</dt>
+        <dd><input type="text" id="user_name" value=""></dd>
+    </form>
+    <input type="image" src="submit.png" alt="送信する" id="submit" width="100px"/>
+</body>
+</html>

@@ -1,37 +1,71 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title>登録ページ</title>
-	<style>
-		dt{color: white; background: black;}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>登録ページ</title>
+    <style>
+        dt{color: white; background: black;}
         dd{margin: 2px;}
-	</style>
-	<script type="text/javascript">
+        span{color: red;}
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+    </script>
+    <script type="text/javascript">
 
         // ロード時
         window.addEventListener('load',
             //ページロード時の処理
             function(event){
                 var elem = document.getElementById('submit');
-                elem.addEventListener('click', clickSubmit, false);
+                $("#submit").click(clickSubmit);
             }
             , false);
 
         // 送信ボタン押下時
-        function clickSubmit(event) {
+        function clickSubmit() {
 
+            // 各フィールドから値を取得してJSONデータを作成
+            var data = {
+                userId: $('#user_id').val(),
+                name: $('#name').val()
+            };
+
+            // 通信実行
+            $.ajax({
+                type: 'post',                                // method = "POST"
+                url: 'http://polls.apiblueprint.org/users',  // POST送信先のURL
+                data: JSON.stringify(data),                  // JSONデータ本体
+                contentType: 'application/json',            // リクエストの Content-Type
+                dataType: 'json',                           // レスポンスをJSONとしてパースする
+                success: function(json_data) {
+                    if (json_data == 201) {
+                        // 登録成功時
+                        $("#register_message").append("登録に成功しました");
+                    } else {
+                        // 登録失敗
+                        error;
+                    }
+                },
+                error: function() {
+                    error;
+                }
+            });
         }
-	</script>
+
+        function error() {
+            $("#register_message").append("登録に失敗しました");
+        }
+    </script>
 </head>
 <body>
-	<h1>利用者登録</h1>
+    <h1>ユーザー登録</h1>
     <form>
         <dt>ユーザーID</dt>
-        <dd><input type="text" id="user_id" value=""></dd>
+        <dd><input type="text" id="user_id"></dd>
         <dt>名前</dt>
-        <dd><input type="text" id="user_name" value=""></dd>
+        <dd><input type="text" id="name"></dd>
     </form>
     <input type="image" src="submit.png" alt="送信する" id="submit" width="100px"/>
+    <p><span id="register_message"></span></p>
 </body>
 </html>
